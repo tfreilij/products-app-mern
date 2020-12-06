@@ -1,11 +1,12 @@
 import instance from '../Config/axios'
 
-/*
-function getProductsFromAPI() {
-    return instance.get("/posts")
+
+export function getProducts() {
+    return instance.get("/")
 }
 
-function getProductFromAPI(idProduct) {
+/*
+export function getProductFromAPI(idProduct) {
     return instance.get("/posts/"+idProduct)
 }
 */

@@ -1,58 +1,43 @@
-const express = require('express');
-const app = express();
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 
+const productsRouter = require('./routes/products');
+const usersRouter = require('./routes/users');
 
+var app = express();
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
-const bodyParser = require('body-parser');
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-const productsService = require("./services/productsService");
+app.use('/products', productsRouter);
+app.use('/users', usersRouter);
 
-const urlParser = bodyParser.urlencoded({ extended: false });
-const jsonParser = bodyParser.json();
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  next(createError(404));
+});
 
+// error handler
+app.use(function(err, req, res, next) {
+  // set locals, only providing error in development
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-app.get("/product/:id", (req,res,next) => {
-    
-    const id = req.params.id
-    console.log(id);
-    productsService.getProduct(id)
-    .then( response  =>  {
-        console.log(response.data)
-        res.setHeader('Content-Type', 'application/json');
-        res.json(response.data);
-    })
-    .catch( error => console.log(error)) 
-    
+  // render the error page
+  res.status(err.status || 500);
+  res.render('error');
+});
 
-
-
-
-
-    
-})
-
-app.get("/",  (req,res,next) => {
-
-    const responseObj = {
-        "userId": 1,
-        "id": 1,
-        "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-        "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-        "imageUrl": "https://www.oscarbarbieri.com/media/catalog/product/cache/1/image/173dd74801682768e2c2e5018515ab09/b/l/blitz110-v8-principal.png"
-        }
-
-    res.json(responseObj);
-
-})
-
-
-app.post("/registration", jsonParser,  (req,res,next) => {
-    
-    console.log(req.body);
-
-    res.send("this is /registration");
-})
-
+module.exports = app;
 
 app.listen(3000);

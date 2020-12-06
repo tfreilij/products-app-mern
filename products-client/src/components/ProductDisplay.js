@@ -7,12 +7,11 @@ function ProductDisplay(props) {
     const product = props.product;
     let showButton = props.button;
 
-    const name = product.name;
-    const description = product.description;
-    const price = product.price;
-    const sku = product.sku;
-    const productId =props.id;
+    const title = product.title;
+    const body = product.body;
+    const id = product.id;
     const imgUrl = product.imageUrl;
+    
     
     console.log("imageUrl",imgUrl);
     const handleClick = () => alert('producto comprado');
@@ -24,7 +23,7 @@ function ProductDisplay(props) {
 
     const heading = <>
             <Card.Img variant="top"  src={imgUrl} />
-            <Nav.Link as={Link} to={'/product/'+productId} >{name} </Nav.Link>
+            <Nav.Link as={Link} to={'/product/'+productId} >{title} </Nav.Link>
          
             
             <Card.Subtitle  >
@@ -34,7 +33,7 @@ function ProductDisplay(props) {
 
     const body = <>
         <Card.Text  >
-            {description}
+            {body}
         </Card.Text>
         <Card.Text >
             {price}

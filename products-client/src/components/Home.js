@@ -16,8 +16,8 @@ function Products() {
         () => {
             
             getProducts()
-            .then( querySnapshot => {
-                        setProducts(querySnapshot.docs);
+            .then( response => {
+                        setProducts(response);
                         setLoading(false);
                     }
                 );
@@ -36,7 +36,7 @@ function Products() {
          return (
             <div>
                 <CardDeck style={ {padding:"1em"}}>
-                    {products.map( product => <ProductDisplay key={product.id} id={product.id} product={product.data()} button={false}/>)}
+                    {products.map( product => <ProductDisplay key={product.id} id={product.id} product={product} button={false}/>)}
                </CardDeck>
             </div>
         )     
