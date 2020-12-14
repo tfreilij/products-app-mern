@@ -15,13 +15,13 @@ function Login() {
     const history = useHistory();
     
     const handleClick = (e) =>{
-      
+   /*   
       const validLogin = signInWithEmailAndPassword(form.email,form.password);
 
       if ( validLogin ) { history.push("/")}
       e.preventDefault();
 
-
+*/
     }
     const handleChange = (e) => {
       const target = e.target;

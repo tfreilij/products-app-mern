@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
 
-import { createUserWithEmailAndPassword, addNewUser } from '../Services/UsersServices'; 
+//import { createUserWithEmailAndPassword, /*addNewUser*/ } from '../Services/UsersServices'; 
 import { Form, Button } from 'react-bootstrap';
 import { useHistory} from 'react-router-dom';
 
@@ -20,7 +20,7 @@ const Registration = () => {
       const surname = form.surname;
       const email = form.email;
       const password = form.password;
-
+/*
       createUserWithEmailAndPassword(email,password)
       .then(data => {
         const userId = data.user.uid;
@@ -33,13 +33,14 @@ const Registration = () => {
         .catch( error => {
               console.log("user error", error);
         })
+      
       })
       .catch( err => {
           console.log("there was an error in the user registration", err);
       })
 
 
-
+*/
       
       e.preventDefault();
 

@@ -17,7 +17,7 @@ function Products() {
             
             getProducts()
             .then( response => {
-                        setProducts(response);
+                        setProducts(response.data);
                         setLoading(false);
                     }
                 );

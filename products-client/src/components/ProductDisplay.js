@@ -9,7 +9,7 @@ function ProductDisplay(props) {
 
     const title = product.title;
     const body = product.body;
-    const id = product.id;
+    const productId = product.id;
     const imgUrl = product.imageUrl;
     
     
@@ -27,16 +27,16 @@ function ProductDisplay(props) {
          
             
             <Card.Subtitle  >
-                {sku}
+                {10}
             </Card.Subtitle>
     </>;
 
-    const body = <>
+    const displayBody = <>
         <Card.Text  >
             {body}
         </Card.Text>
         <Card.Text >
-            {price}
+            {20}
         </Card.Text>
     </>;
 
@@ -56,7 +56,7 @@ function ProductDisplay(props) {
                 
                     <Card.Body>
                         {heading}
-                        {body}
+                        {displayBody}
                         {buyButton}
                         {returnButton}
                     </Card.Body>
@@ -67,7 +67,7 @@ function ProductDisplay(props) {
         return <Card style={{ width: '10rem' }}>
                     <Card.Body>
                         {heading}
-                        {body}
+                        {displayBody}
                     </Card.Body>
                 </Card>
             

@@ -6,32 +6,32 @@ const jwt = require('jsonwebtoken');
 module.exports = {
 
  
-    registration: async function(req, res, next) {
+    register: async function(req, res, next) {
 
         
         try{
             
-            let nombreElegido = req.body.usuario
-            let passwordElegido = req.body.password
+            let chosenName = req.body.user
+            let chosenPassword = req.body.password
 
         
-            let usuario = await usuariosModel.findOne({ usuario: nombreElegido })
+            let user = await usuariosModel.findOne({ usuario: chosenName })
 
-            if ( usuario )
+            if ( user )
             {
-                res.json({mensaje: "el usuario ya existe"})
+                res.json({mensaje: "the user already exist"})
                 
             }
             else
             {
                 
-                let usuario = new usuariosModel( { usuario: nombreElegido, password: passwordElegido  } )
+                let user = new usuariosModel( { userName: chosenName, password: chosenPassword  } )
                 
-                usuario.save()
+                user.save()
 
                 
                 
-                res.json( {message : "usuario agregado correctamente ", informacion: usuario})
+                res.json( {message : "user added ", information: user})
                 
 
             }
@@ -41,8 +41,7 @@ module.exports = {
             next(e)
         }
 
-        res.setHeader('Content-Type', 'application/json');
-        res.json({message: "users registration"});
+
         
         
     },
@@ -51,28 +50,41 @@ module.exports = {
         
         try{
 
-            let nombreIngresado = req.body.usuario
-            let passwordIngresada = req.body.password
-            let usuario = await usuariosModel.findOne({ usuario: nombreIngresado })
+            let name = req.body.user
+            let password = req.body.password
+            let user = await usuariosModel.findOne({ userName: name })
+            //let secretKey = req.app.get('x-auth-token');
 
+            
+            
 
-            if(usuario){
-                if(bcrypt.compareSync(passwordIngresada, usuario.password)){
-                    const token = jwt.sign({usuario:usuario._id},req.app.get('secretKey'),{expiresIn:'1h'})
+            if(user)
+            {
+                
+                if(bcrypt.compareSync(password, user.password))
+                {   
+                    
+                    const token = jwt.sign({user:user._id},'key',{expiresIn:'1h'})
+                    
+                    console.log(token)
                     res.json({token:token})
-                }else{
-                    res.json({mensaje:"Contraseña incorrecta"})
                 }
-            }else{
-                res.json({mensaje:"el usuario no esta registrado"})
+                else
+                {
+                    
+                    res.json({mensaje:"incorrect password"})
+                }
+            }
+            else
+            {
+                res.json({mensaje:"user could not be added"})
             }
 
         }catch(e){
             next(e)
         }
         
-        res.setHeader('Content-Type', 'application/json');
-        res.json({message: "users login"});
+
     }
 
 }

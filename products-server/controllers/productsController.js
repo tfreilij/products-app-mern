@@ -1,4 +1,5 @@
 const axios = require('axios');
+const jwt = require('jsonwebtoken');
 
 module.exports = {
     getProduct: (req,res,next)  => {
@@ -19,11 +20,18 @@ module.exports = {
 
     getProducts: (req,res,next)  => {
         
+        const token = req.body.token;
+
+        //const verified = jwt.verify(token,"key");
+
+        //console.log(verified);
+
         axios.get(`https://jsonplaceholder.typicode.com/posts/`)
         .then( response  =>  {
-            console.log(response.data)
+
+            const data = response.data.slice(0,4)
             res.setHeader('Content-Type', 'application/json');
-            res.json(response.data);
+            res.json(data);
         })
         .catch( error => console.log(error));
 
